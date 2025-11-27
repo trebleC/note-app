@@ -21,4 +21,10 @@ export default defineConfig({
 		presetTypography(),
 		presetAutoprefixer(),
 	],
+	theme: {
+		colors: {
+			primary: '#3880ff',
+			neutral: '#666666',
+		},
+	},
 })

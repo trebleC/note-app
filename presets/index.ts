@@ -28,13 +28,11 @@ import Router from 'unplugin-vue-router/vite'
 import { AutoGenerateImports, vue3Presets } from 'vite-auto-import-resolvers'
 import Compression from 'vite-plugin-compression'
 import EnvTypes from 'vite-plugin-env-types'
-import { viteMockServe as Mock } from 'vite-plugin-mock'
 import Removelog from 'vite-plugin-removelog'
 import Modules from 'vite-plugin-use-modules'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import Layouts from 'vite-plugin-vue-meta-layouts'
 
-import I18N from '@intlify/unplugin-vue-i18n/vite'
 import Legacy from 'vite-plugin-legacy-swc'
 import Vue from '@vitejs/plugin-vue'
 import Jsx from '@vitejs/plugin-vue-jsx'
@@ -122,13 +120,6 @@ export default function () {
 			skipTopLevelRouteLayout: true,
 		}),
 		/**
-		 * mock 服务
-		 * https://github.com/vbenjs/vite-plugin-mock
-		 */
-		Mock({
-			prodEnabled: env.VITE_APP_MOCK_IN_PRODUCTION,
-		}),
-		/**
 		 * 组件自动按需引入
 		 * https://github.com/antfu/unplugin-vue-components
 		 */
@@ -164,15 +155,6 @@ export default function () {
 					[TDesignResolver({ library: 'vue-next' }), 'tdesign-vue-next'],
 				],
 			}),
-		}),
-		/**
-		 * i18n 国际化支持
-		 * https://www.npmjs.com/package/@intlify/unplugin-vue-i18n
-		 */
-		I18N({
-			runtimeOnly: false,
-			compositionOnly: true,
-			include: ['locales/**'],
 		}),
 		/**
 		 * jsx 和 tsx 支持
@@ -242,7 +224,7 @@ export default function () {
 	 */
 	if (env.VITE_APP_API_AUTO_IMPORT) {
 		const dirs = env.VITE_APP_DIR_API_AUTO_IMPORT
-			? ['src/stores/**', 'src/composables/**', 'src/api/**']
+			? ['src/stores/**', 'src/composables/**', 'src/api/**','src/hooks/**']
 			: []
 		plugins.push(
 			AutoImport({
@@ -262,11 +244,6 @@ export default function () {
 						[TDesignResolver({ library: 'vue-next' }), 'tdesign-vue-next'],
 					],
 				}),
-				eslintrc: {
-					enabled: true,
-					globalsPropValue: true,
-					filepath: r('presets/eslint/.eslintrc-auto-import.json'),
-				},
 			}),
 		)
 	}

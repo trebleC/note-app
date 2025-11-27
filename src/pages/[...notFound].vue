@@ -18,7 +18,7 @@ const typedRef = useTyped([' is not found!'])
 			</RouterLink>
 		</div>
 		<img
-			:src="safeResolve('/notFound/32.svg')"
+			:src="safeResolve('/airtab/notFound/32.svg')"
 			class="cover"
 			alt="page not found"
 		/>
