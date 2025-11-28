@@ -17,10 +17,10 @@ RUN git clone https://github.com/trebleC/note-app.git .
 
 
 # 安装依赖
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --no-frozen-lockfile
 
-# 构建项目
-RUN pnpm run build
+# 构建项目（设置 NODE_OPTIONS 增加内存限制）
+RUN NODE_OPTIONS="--max-old-space-size=4096" pnpm run build
 
 # 第二阶段：使用 nginx 部署
 FROM nginx:alpine
