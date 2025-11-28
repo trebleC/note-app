@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  note-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        GIT_REPO_URL: https://github.com/trebleC/note-app.git
+        GIT_BRANCH: main
+    container_name: note-app
+    ports:
+      - "8043:8043"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

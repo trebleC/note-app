@@ -8,7 +8,7 @@ const prefixPath = env.VITE_APP_PREFIX
 
 export default defineConfig({
 	plugins: [Tov()],
-		base: prefixPath,
+	base: prefixPath,
 
 	resolve: {
 		alias: {
@@ -19,6 +19,26 @@ export default defineConfig({
 		preprocessorOptions: {
 			less: {
 				javascriptEnabled: true,
+			},
+		},
+	},
+	build: {
+		chunkSizeWarningLimit: 1000,
+		assetsInlineLimit: 0,
+		rollupOptions: {
+			output: {
+				manualChunks: {
+					'vue-vendor': ['vue', 'vue-router', 'pinia'],
+					'element-plus': ['element-plus', '@element-plus/icons-vue'],
+					'echarts': ['echarts', 'vue-echarts'],
+					'utils': ['axios', 'dayjs'],
+				},
+				assetFileNames: (assetInfo) => {
+					if (assetInfo.name && /\.(woff2?|eot|ttf|otf)(\?.*)?$/.test(assetInfo.name)) {
+						return 'assets/fonts/[name]-[hash][extname]'
+					}
+					return 'assets/[name]-[hash][extname]'
+				},
 			},
 		},
 	},
